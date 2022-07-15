@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTML DOM</title>
+    <link rel="stylesheet" href="./assests/style.css">
+</head>
+<body>
+    <div class="main">
+        <form action="" method="POST" class="form" id="form1">
+            <h3 class="heading">Register Form</h3>
+
+            <div class="spacer"></div>
+
+            <div class="form-group">
+                <label for="fullname" class="form-label">Fullname</label>
+                <input type="text" name="fullname" placeholder="Ex: Kelvin De Bryne" id="fullname" class="form-control">
+                <span class="form-message"></span>
+            </div>
+
+            <div class="form-group">
+                <label for="email" class="form-label">Email</label>
+                <input type="text" name="email" placeholder="Ex: email@domain.com" id="email" class="form-control">
+                <span class="form-message"></span>
+            </div>
+
+            <div class="form-group">
+                <label for="province" class="form-label">Your province</label>
+                <select name="province" id="province" class="form-control">
+                    <option value="">--Choose province--</option>
+                    <option value="HNI">Hanoi</option>
+                    <option value="SGN">Saigon</option>
+                </select>
+                <span class="form-message"></span>
+            </div>
+
+            <div class="form-group">
+                <label for="avatar" class="form-label">Your avatar</label>
+                <input type="file" name="avatar" id="avatar" class="form-control">
+                <span class="form-message"></span>
+            </div>
+
+            <div class="form-group">
+                <label for="password" class="form-label">Password</label>
+                <input type="password" name="password" placeholder="Type password" id="password" class="form-control">
+                <span class="form-message"></span>
+            </div>
+
+            <div class="form-group">
+                <label for="password_confirm" class="form-label">Type password again</label>
+                <input type="password" name="password_confirm" placeholder="Type password again" id="password_confirm" class="form-control">
+                <span class="form-message"></span>
+            </div>
+
+            <div class="form-group gender-form">
+                <label for="gender" class="form-label">Level</label>
+                <div class="">
+                    <input type="radio" name="level" value="Beginner" class="form-control">
+                    <p>Beginner</p>
+                </div>
+                <div class="">
+                    <input type="radio" name="level" value="Junior" class="form-control">
+                    <p>Junior</p>
+                </div>
+                <div class="">
+                    <input type="radio" name="level" value="Senior" class="form-control">
+                    <p>Senior</p>
+                </div>
+                <span class="form-message"></span>
+            </div>
+
+            <button class="form-submit">Register</button>
+        </form>
+    </div>
+
+
+    <script src="./script.js"></script>
+    <script>
+        // expected ouput
+        Validator({
+            form: '#form1',
+            formGroupSelector: '.form-group',
+            errorSelector: '.form-message',
+            rules: [
+                Validator.isRequired('#fullname'),
+                Validator.isRequired('#email'),
+                Validator.isEmail('#email'),
+                Validator.isRequired('#province'),
+                Validator.isRequired('input[name="level"]'),
+                Validator.isRequired('#avatar'),
+                Validator.minLength('#password', 6),
+                Validator.isRequired('#password_confirm'),
+                Validator.isConfirmed('#password_confirm', () => {
+                    return document.querySelector('#form1 #password').value;
+                }, 'The password is not correct'),
+            ],
+            onSubmit: (data) => {
+                // call API
+                console.log(data);
+            }
+        });
+    </script>
+</body>
+</html>
